@@ -16,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float xRotation; // hold our x rotation
     public float yRotation; // hold our y rotation
+
+    // Bullet stuff
+    public GameObject bullet; // the prefab bullet to fire
+    public float bulletForce; // how fast the bullet travels
+    public Transform shootPosition; // where the bullet comes out of
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +70,22 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // adding force up on the player to jump
+        }
+
+        ShootBullet(); // make sure to call the shoot function
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0); // to reset rotation if its all messed up when we play
+        }
+    }
+
+    void ShootBullet() // how we shoot/fire the bullet from our gun
+    {
+        if (Input.GetMouseButtonDown(0)) // when we left click
+        {
+            GameObject newBullet = Instantiate(bullet, shootPosition.position, transform.rotation); // create new bullet
+            newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletForce); // make the bullet go forward
         }
     }
 }
