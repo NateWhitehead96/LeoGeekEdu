@@ -21,6 +21,11 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet; // the prefab bullet to fire
     public float bulletForce; // how fast the bullet travels
     public Transform shootPosition; // where the bullet comes out of
+    public int maxAmmo; // how much ammo we can have
+    public int currentAmmo; // how much ammo we have currently
+
+    public int maxHealth; // how much hp we have to start
+    public int currentHealth; // how much health we currently have
     // Start is called before the first frame update
     void Start()
     {
@@ -82,10 +87,15 @@ public class PlayerMovement : MonoBehaviour
 
     void ShootBullet() // how we shoot/fire the bullet from our gun
     {
-        if (Input.GetMouseButtonDown(0)) // when we left click
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0) // when we left click and have ammo
         {
+            currentAmmo--; // subtract one bullet
             GameObject newBullet = Instantiate(bullet, shootPosition.position, transform.rotation); // create new bullet
             newBullet.GetComponent<Rigidbody>().AddForce(transform.forward * bulletForce); // make the bullet go forward
+        }
+        if (Input.GetKeyDown(KeyCode.R)) // reloading with R
+        {
+            currentAmmo = maxAmmo; // reload all of our bullets
         }
     }
 }
