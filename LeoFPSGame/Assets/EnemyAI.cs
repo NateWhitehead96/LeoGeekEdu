@@ -9,6 +9,8 @@ public class EnemyAI : MonoBehaviour
 
     public Transform player; // the position of the player
     public int health; // how much health the enemy has
+
+    public float distance; // distance between player and enemy
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,17 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(player.position); // this sets the destination of the enemy to constantly move towards the player
+        distance = Vector3.Distance(transform.position, player.position);
+
+        if(distance < 20)
+        {
+            agent.SetDestination(player.position); // this sets the destination of the enemy to constantly move towards the player
+        }
+        else
+        {
+            agent.ResetPath(); // stop following player if they are outside of the distance range
+        }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
