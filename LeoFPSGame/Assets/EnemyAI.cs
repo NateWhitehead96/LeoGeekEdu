@@ -44,7 +44,7 @@ public class EnemyAI : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerMovement>().currentHealth--; // lose 1 health on the player
+            collision.gameObject.GetComponent<PlayerMovement>().currentHealth -= 1; // lose 1 health on the player
         }
     }
 }

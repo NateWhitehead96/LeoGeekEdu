@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public int currentAmmo; // how much ammo we have currently
 
     public int maxHealth; // how much hp we have to start
-    public int currentHealth; // how much health we currently have
+    public int currentHealth;
     // Start is called before the first frame update
     void Start()
     {
