@@ -11,22 +11,39 @@ public class CarScript : MonoBehaviour
     public Vector3 MoveDirection; // how we move forward
 
     private Rigidbody rb; // to help move the car with physics
-
+    // these will help with triggering which camera to use
+    [SerializeField]
+    public GameObject ThirdPersonCamera;
+    public GameObject FirstPersonCamera;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>(); // link rigidbody to the car
+        FirstPersonCamera.SetActive(false); // make sure we start in thirdperson
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab)) // when you hit tab toggle between camera views
+        {
+            if (ThirdPersonCamera.activeInHierarchy) // if our thirdperson camera is the active camera
+            {
+                ThirdPersonCamera.SetActive(false); // disable thirdperson camera
+                FirstPersonCamera.SetActive(true); // enable first person camera
+            }
+            else // first person camera is active
+            {
+                ThirdPersonCamera.SetActive(true); // enable thirdperson camera
+                FirstPersonCamera.SetActive(false); // disable first person camera
+            }
+        }
         // help with testing on Computer
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) // turning right
+        if (Input.GetKey(KeyCode.RightArrow) && rb.velocity != Vector3.zero || Input.GetKey(KeyCode.D)) // turning right
         {
             TurnRight();
         }
-        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) // turning left
+        if(Input.GetKey(KeyCode.LeftArrow) && rb.velocity != Vector3.zero || Input.GetKey(KeyCode.A)) // turning left
         {
             TurnLeft();
         }
@@ -46,9 +63,9 @@ public class CarScript : MonoBehaviour
 
     public void MoveForward()
     {
-        //rb.AddForce(transform.forward * moveSpeed); // add force forward
-        MoveDirection = transform.forward; // storing our forward direction in the move direction
-        rb.position += MoveDirection * moveSpeed * Time.deltaTime; // apply our speed to the move direction, then add that to our position
+        rb.AddForce(transform.forward * moveSpeed, ForceMode.Force); // add force forward
+        //MoveDirection = transform.forward; // storing our forward direction in the move direction
+        //rb.position += MoveDirection * moveSpeed * Time.deltaTime; // apply our speed to the move direction, then add that to our position
     }
     public void TurnLeft()
     {
