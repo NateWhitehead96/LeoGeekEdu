@@ -18,10 +18,10 @@ public class MainCamera : MonoBehaviour
     void Update()
     {
         // move the camera contantly towards the players position, but lag behind a little bit
-        transform.position = Vector3.Lerp(transform.position, player.position + positionOffset, 2 * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, player.position + positionOffset, 3 * Time.deltaTime);
 
         // make sure the camera has the same rotations as the player (turning) and add the slight downward angle as an offset for the x axis
-        //transform.rotation = player.rotation;
+        transform.rotation = player.rotation;
         //transform.RotateAround(player.position, player.rotation.x + transform.rotation.x);
     }
 }
