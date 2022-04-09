@@ -15,6 +15,8 @@ public class CarScript : MonoBehaviour
     [SerializeField]
     public GameObject ThirdPersonCamera;
     public GameObject FirstPersonCamera;
+
+    //public WheelCollider[] wheels; // all of our wheels
     // Start is called before the first frame update
     void Start()
     {
@@ -38,12 +40,14 @@ public class CarScript : MonoBehaviour
                 FirstPersonCamera.SetActive(false); // disable first person camera
             }
         }
-        // help with testing on Computer
+
+
+        //help with testing on Computer
         if (Input.GetKey(KeyCode.RightArrow) && rb.velocity != Vector3.zero || Input.GetKey(KeyCode.D)) // turning right
         {
             TurnRight();
         }
-        if(Input.GetKey(KeyCode.LeftArrow) && rb.velocity != Vector3.zero || Input.GetKey(KeyCode.A)) // turning left
+        if (Input.GetKey(KeyCode.LeftArrow) && rb.velocity != Vector3.zero || Input.GetKey(KeyCode.A)) // turning left
         {
             TurnLeft();
         }
@@ -51,7 +55,7 @@ public class CarScript : MonoBehaviour
         {
             MoveForward();
         }
-        if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) // reversing
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) // reversing
         {
             rb.AddForce(transform.forward * -moveSpeed);
         }
@@ -59,9 +63,26 @@ public class CarScript : MonoBehaviour
         {
             transform.rotation = Quaternion.identity; // just to reset our rotations if we flip out / flip over
         }
+
     }
 
-    public void MoveForward()
+//private void FixedUpdate()
+//{
+//    foreach (var wheel in wheels) // loop through all wheels and apply torque
+//    {
+//        wheel.motorTorque = Input.GetAxis("Vertical") * moveSpeed;
+//    }
+
+//    for (int i = 0; i < wheels.Length; i++) // for the first 2 wheels, rotate the wheels
+//    {
+//        if(i < 2)
+//        {
+//            wheels[i].steerAngle = Input.GetAxis("Horizontal") * rotationSpeed;
+//        }
+//    }
+//}
+
+public void MoveForward()
     {
         rb.AddForce(transform.forward * moveSpeed, ForceMode.Force); // add force forward
         //MoveDirection = transform.forward; // storing our forward direction in the move direction
