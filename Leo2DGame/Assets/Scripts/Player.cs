@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Animator anim; // control the animations
     public bool walking; // handle the walking animation
     public bool jumping; // handle the jump animation
+
+    public int coins; // to know how many coins the player has collected
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour
             sprite.flipX = true; // flip the sprite if needed to face left
             walking = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space)) // jumping
+        if (Input.GetKeyDown(KeyCode.Space) && jumping == false) // jumping
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumping = true;
@@ -53,5 +55,13 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         jumping = false; // whenever we collide with something, jumping will be false
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Head"))
+        {
+            Destroy(collision.transform.parent.gameObject); // destroy the whole spider
+        }
     }
 }
