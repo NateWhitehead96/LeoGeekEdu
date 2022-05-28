@@ -766,6 +766,7 @@ MonoBehaviour:
   walking: 0
   jumping: 0
   coins: 0
+  health: 3
 --- !u!95 &738312510
 Animator:
   serializedVersion: 3
@@ -2293,6 +2294,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CoinDisplay: {fileID: 543726505}
   player: {fileID: 738312509}
+  HeartOne: {fileID: 1606706506}
+  HeartTwo: {fileID: 1583790784}
+  HeartThree: {fileID: 852546559}
+  FullHeart: {fileID: -329807682860033722, guid: a4f21138a51160846ac823bff1c98d93, type: 3}
+  EmptyHeart: {fileID: 7803244411431362681, guid: a4f21138a51160846ac823bff1c98d93, type: 3}
 --- !u!1 &2001238692
 GameObject:
   m_ObjectHideFlags: 0

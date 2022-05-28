@@ -36,6 +36,7 @@ public class GroundEnemy : MonoBehaviour
         if (collision.gameObject.GetComponent<Player>())
         {
             print("hit player");
+            collision.gameObject.GetComponent<Player>().health--; // subtract 1 health
         }
     }
 }

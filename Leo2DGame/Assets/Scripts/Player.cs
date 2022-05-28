@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public bool jumping; // handle the jump animation
 
     public int coins; // to know how many coins the player has collected
+    public int health = 3; // how much health the player has
     // Start is called before the first frame update
     void Start()
     {
