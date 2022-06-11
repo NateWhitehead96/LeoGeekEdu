@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Animator anim; // control the animations
     public bool walking; // handle the walking animation
     public bool jumping; // handle the jump animation
+    public bool climbing; // handle the climbing animation
 
     public int coins; // to know how many coins the player has collected
     public int health = 3; // how much health the player has
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("walking", walking); // handles the animator for walking
         anim.SetBool("jumping", jumping); // handles the animator for jumping
+        anim.SetBool("climbing", climbing); // handle the animator for climbing
         if (Input.GetKey(KeyCode.D)) // going right
         {
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
@@ -51,6 +53,14 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumping = true;
         }
+        if(Input.GetKey(KeyCode.W) && climbing == true) // on a ladder, and pressing W to go up
+        {
+            transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
+        }
+        if(Input.GetKey(KeyCode.S) && climbing == true) // on ladder and pressing S to go down
+        {
+            transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -64,5 +74,20 @@ public class Player : MonoBehaviour
         {
             Destroy(collision.transform.parent.gameObject); // destroy the whole spider
         }
+        if (collision.gameObject.CompareTag("Ladders"))
+        {
+            climbing = true;
+            rb.gravityScale = 0; // make sure we dont fall down the ladder
+        }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ladders"))
+        {
+            climbing = false;
+            rb.gravityScale = 1; // bring gravity back when we're off the ladder
+        }
+    }
+
 }
